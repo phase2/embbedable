@@ -5,8 +5,9 @@ $plugin = array(
 function embed_node($info) {
   $nid = $info['nid'];
   $view_mode = isset($info['view_mode']) ? $info['view_mode'] : 'embed';
-
-  return drupal_render(node_view(node_load($nid), $view_mode));
+  // Necessary to avoid notice in strict mode
+  $render = node_view(node_load($nid), $view_mode);
+  return drupal_render($render);
 }
 
 function node_wysiwyg_form(&$form, &$form_state) {
