@@ -183,6 +183,9 @@ function embeddable_embed_form($form, &$form_state) {
   $form['wrapper']['#prefix'] = "<div id = 'form-wrapper'>";
   $form['wrapper']['#suffix'] = "</div>";
   $form['#submit'][] = 'embeddable_embed_form_submit';
+  // @TODO: this is a temporary solution, ideally the form should only be included
+  // on the appropriate pages
+  $form['#attributes'] = array('style' => array('display: none;'));
   
   return $form;
 }

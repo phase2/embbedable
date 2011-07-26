@@ -10,6 +10,9 @@ Drupal.behaviors.embed = {
     // be ajax and pull the first form using ajax.
     id = 'embeddable-embed-form'
     form = $("#" + id);
+    if (form.length > 0) {
+      form.show();
+    }
     if(!form.hasClass('dialog')) {
       form.dialog({
         autoOpen: false,
