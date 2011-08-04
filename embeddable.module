@@ -53,7 +53,12 @@ function _embeddable_replace($matches) {
   $plugin = embeddable_embed($type);
   $cb = isset($plugin['embed callback']) ? $plugin['embed callback'] : $plugin['name'] ."embed";
   if (function_exists($cb)) {
-    return $cb($info);
+    // Remove the embed_type and insert the HTML returned by the associated callback
+    $matches[0] = preg_replace(
+      array('/embed_type=".*?"[ ]*/', '/>.*</'),
+      array('', '>' . $cb($info) . '<'),
+      $matches[0]
+    );
   }
   return $matches[0];
 }
