@@ -26,7 +26,9 @@ function embeddable_page_alter(&$page) {
  * a post render function to transform all embeds
  */
 function embeddable_post_render($content) {
- $pattern = "/(<div[^>]*embed_type.*?<\/div>)/";
+ //we want to capture the div open and close tag, but not anything inside
+ //incase something nasty that will not parse is in there
+ $pattern = "/(<div[^>]*embed_type.*?>).*?(<\/div>)/";
  $content = preg_replace_callback($pattern, "_embeddable_replace", $content);
   
   return $content;
@@ -39,7 +41,7 @@ function embeddable_post_render($content) {
  */
 function _embeddable_replace($matches) {
   $replacements = array();
-  $subject = $matches[0];
+  $subject = $matches[1].$matches[2];
   $doc = new DOMDocument();
   $f = $doc->createDocumentFragment();
   $f->appendXML($subject);
