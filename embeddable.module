@@ -6,6 +6,9 @@
  */
 function embeddable_page_alter(&$page) {
   $page['#post_render'][] = 'embeddable_post_render';
+  //do the post render on content so that we can insert js and such if the embed needs it
+  //post render on the page is too late
+  $page['content']['#post_render'][] = 'embeddable_post_render';
   // we need to add the contextual lib here or they do not get themed
   // in our embeds
   $page['page_top']['add_contextual_lib']['#attached']['library'][] = array('contextual', 'contextual-links');
